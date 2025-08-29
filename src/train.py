@@ -6,7 +6,6 @@ from torch import optim, nn
 from torch.utils.data import DataLoader
 from torchvision.transforms import transforms
 from tqdm import tqdm
-
 from src.Discriminator import Discriminator
 from src.Genenator import Generator
 from src.MyDataset import MyDataset
@@ -44,7 +43,7 @@ LEARNING_RATE_D = 2e-4
 BETA1 = 0.5  # For Adam optimizer
 LAMBDA_L1 = 100  # Weight for L1 loss
 NUM_EPOCHS = 250
-BATCH_SIZE = 170
+BATCH_SIZE = 2
 
 Con = True
 
@@ -67,16 +66,16 @@ if Con == True:
 criterion_GAN = nn.BCEWithLogitsLoss()
 criterion_L1 = nn.L1Loss()
 
-train_dataset = MyDataset(root_dir='data/Train', transform=transform)
+train_dataset = MyDataset(root_dir='/home/loc/Documents/Painting-Images-With-GAN/data/Train', transform=transform)
 
 
 train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
-NUM_EPOCHS = 300 - start_epoch
+NUM_EPOCHS = 300
 
 
 for epoch in range(start_epoch, NUM_EPOCHS):
     for batch_idx, (input_img, target_img) in enumerate(
-            tqdm.tqdm(train_loader, desc=f"Epoch {epoch + 1}/{NUM_EPOCHS}")):
+            tqdm(train_loader, desc=f"Epoch {epoch + 1}/{NUM_EPOCHS}")):
         input_img, target_img = input_img.to(DEVICE), target_img.to(DEVICE)
 
         discriminator.zero_grad()
@@ -111,16 +110,16 @@ for epoch in range(start_epoch, NUM_EPOCHS):
                   f"D Loss: {loss_D.item():.4f} | G Loss: {loss_G.item():.4f}")
 
 
-            if not os.path.exists("images"):
-                os.makedirs("images")
+            if not os.path.exists("/home/loc/Documents/Painting-Images-With-GAN/images/generated_images"):
+                os.makedirs("/home/loc/Documents/Painting-Images-With-GAN/images/generated_images")
 
-            torchvision.utils.save_image(fake_img * 0.5 + 0.5, f"images/generated_images/fake_epoch{epoch}_batch{batch_idx}.png")
-            torchvision.utils.save_image(input_img * 0.5 + 0.5, f"images/generated_images/input_epoch{epoch}_batch{batch_idx}.png")
-            torchvision.utils.save_image(target_img * 0.5 + 0.5, f"images/generated_images/real_epoch{epoch}_batch{batch_idx}.png")
+            torchvision.utils.save_image(fake_img * 0.5 + 0.5, f"/home/loc/Documents/Painting-Images-With-GAN/images/generated_images/fake_epoch{epoch}_batch{batch_idx}.png")
+            torchvision.utils.save_image(input_img * 0.5 + 0.5, f"/home/loc/Documents/Painting-Images-With-GAN/images/generated_images/input_epoch{epoch}_batch{batch_idx}.png")
+            torchvision.utils.save_image(target_img * 0.5 + 0.5, f"/home/loc/Documents/Painting-Images-With-GAN/images/generated_images/real_epoch{epoch}_batch{batch_idx}.png")
 
     #Save models after each epoch or periodically
 
-    save_checkpoint(generator, optimizer_G, epoch, filename = "models/checkpointG.pth.tar")
-    save_checkpoint(discriminator, optimizer_D, epoch, filename = "models/checkpointD.pth.tar")
+    save_checkpoint(generator, optimizer_G, epoch, filename = "/home/loc/Documents/Painting-Images-With-GAN/models/checkpointG.pth.tar")
+    save_checkpoint(discriminator, optimizer_D, epoch, filename = "/home/loc/Documents/Painting-Images-With-GAN/models/checkpointD.pth.tar")
 
 print("Training finished!")

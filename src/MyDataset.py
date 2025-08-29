@@ -1,5 +1,5 @@
 import os
-from PIL.Image import Image
+from PIL import Image
 from torch.utils.data import Dataset
 from torchvision.transforms import transforms
 
