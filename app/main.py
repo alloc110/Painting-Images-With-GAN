@@ -13,6 +13,7 @@ transform = transforms.Compose([
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 ])
 
+# Change path test image
 image_path = "/home/loc/Documents/Painting-Images-With-GAN/data/Test/real_333.jpg"
 
 def load_checkpoint(model, optimizer, filename="checkpoint.pth.tar"):
