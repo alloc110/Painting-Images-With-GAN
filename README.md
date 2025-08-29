@@ -1,9 +1,5 @@
 # Painting-Images-With-GAN
 
-
-
-### Real Image
-![Video demo](data/Test/real_333.jpg)
 ### Fake Image
 ![Predict Table](images/test.png)
 ## Table of Contents
